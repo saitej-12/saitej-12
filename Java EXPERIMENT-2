@@ -1,0 +1,125 @@
+/* 
+						Question
+Develop a Java application to generate Electricity bill. Create a class with the following members: Consumer no., consumer name, previous month reading, current month reading, and type of EB connection (i.e. domestic or commercial). Compute the bill amount using the following tariff.
+If the type of the EB connection is domestic, calculate the amount to be paid as follows:
+First 100 units - Rs. 1per unit, 101-200units - Rs. 2.50per unit
+201 -500 units - Rs. 4per unit, >501 units - Rs. 6per unit.
+If the type of the EB connection is commercial, calculate the amount to be paid as follows:
+First 100 units - Rs. 2per unit, 101-200units - Rs. 4.50per unit
+201 -500 units - Rs. 6per unit, >501 units - Rs. 7per unit 
+*/
+
+import java.io.*;
+
+class ElectricityBill{
+    private String consumerNumber;
+    private String consumerName;
+    private double previousMonthReading;
+    private double currentMonthReading;
+    private String ebConnection;
+    
+    public ElectricityBill(){}
+    
+    public ElectricityBill(String consumerNumber,String consumerName,double previousMonthReading,double currentMonthReading,String ebConnection){
+        this.consumerNumber=consumerNumber;
+        this.consumerName=consumerName;
+        this.previousMonthReading=previousMonthReading;
+        this.currentMonthReading= currentMonthReading;
+        this.ebConnection=ebConnection;
+    }
+    
+    public void setConsumerNumber(String consumerNumber){
+        this.consumerNumber=consumerNumber;
+    }
+    public void setConsumerName(String consumerName){
+        this.consumerName=consumerName;
+    }
+    public void setpreviousMonthReading(double previousMonthReading){
+        this.previousMonthReading=previousMonthReading;
+    }
+    public void setcurrentMonthReading(double currentMonthReading){
+        this.currentMonthReading= currentMonthReading;
+    }
+    public void setebConnection(String ebConnection){
+        this.ebConnection=ebConnection;
+    }
+    
+    public double billAmount(){
+         double amount=0.0;
+        if(ebConnection=="domestic"){
+            double first=1;
+            double second=2.50;
+            double third=4;
+            double fourth=6;
+            double units= currentMonthReading-previousMonthReading;
+           
+            double last =0.0;
+            double fraction=units-(int)units;
+            for(int i=1;i<=(int)units;i++){
+                if(i<=100){
+                    amount=amount+first;
+                    last=first;
+                }
+                else if(i>100 && i<=200){
+                    amount=amount+second;
+                    last=second;
+                }
+                else if(i>200 && i<=500){
+                    amount=amount+third;
+                    last=third;
+                }
+                else if(i<500){
+                    amount=amount+fourth;
+                    last=fourth;
+                }
+                
+            }
+         amount = amount + fraction*last; 
+        
+        }
+        else if(ebConnection=="commercial"){
+            double first=2;
+            double second=4.50;
+            double third=6;
+            double fourth=7;
+            double units= currentMonthReading-previousMonthReading;
+           
+            double last =0.0;
+            double fraction=units-(int)units;
+            for(int i=1;i<=(int)units;i++){
+                if(i<=100){
+                    amount=amount+first;
+                    last=first;
+                }
+                else if(i>100 && i<=200){
+                    amount=amount+second;
+                    last=second;
+                }
+                else if(i>200 && i<=500){
+                    amount=amount+third;
+                    last=third;
+                }
+                else if(i<500){
+                    amount=amount+fourth;
+                    last=fourth;
+                }
+                
+            }
+         amount = amount + fraction*last; 
+         
+        }
+         
+    return amount;
+    }
+}
+
+
+
+public class Experiment_2{
+         public static void main(String []args){
+             ElectricityBill eBill;
+             eBill = new ElectricityBill("12345","sample",1200.3,1300,"domestic");
+             System.out.println("Bill amount ="+eBill.billAmount());
+         }
+    
+}
